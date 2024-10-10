@@ -1,4 +1,5 @@
 import { Console } from "../models/console.model";
+import { notFound } from "../error/NotFoundError";
 
 export class ConsoleService {
 
@@ -9,7 +10,11 @@ export class ConsoleService {
 
   // Récupère une console par ID
   public async getConsoleById(id: number): Promise<Console | null> {
-    return Console.findByPk(id);
+    const console = await Console.findByPk(id);
+    if(console){
+      return console;
+    }
+    return notFound("Console id " + id);
   }
 
   // Crée une nouvelle console
@@ -41,7 +46,7 @@ export class ConsoleService {
       await console.save();
       return console;
     }
-    return null;
+    return notFound("Console id " + id);
   }
 }
 
