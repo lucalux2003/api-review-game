@@ -15,12 +15,26 @@ export class GameService {
       ],
     });
   }
+
   public async getGameById(id: number): Promise<GameDTO | null> {
     const game = await Game.findByPk(id);
     if(game){
       return game;
     }
     return notFound("Game id " + id);
+  }
+
+  // Crée une nouvelle console
+  public async createGame(
+    title: string,
+    console_id: number
+  ): Promise<Game> {
+    const console = await Console.findByPk(console_id);
+    if(console){
+      return Game.create({title: title, console_id: console_id });
+    }
+    return notFound("Console id " + console_id);
+    
   }
 }
 
