@@ -26,6 +26,14 @@ export class GameService {
     return notFound("Game id " + id);
   }
 
+  public async getReviewsByGameId(id: number): Promise<Review[]>{
+    const game = await Game.findByPk(id);
+    if(console){
+      return Review.findAll({where : {game_id : id }});
+    }
+    return notFound("Console id " + id);
+  }
+
   // Crée un nouveau jeu
   public async createGame(
     title: string,
