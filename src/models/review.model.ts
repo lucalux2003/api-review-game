@@ -5,7 +5,7 @@ import { Game } from "./game.model";
 export interface ReviewAttributes {
   id?: number;
   rating: number;
-  text_review: string;
+  review_text: string;
   game_id: number;
   game?: Game;
 }
@@ -13,7 +13,7 @@ export interface ReviewAttributes {
 export class Review extends Model<ReviewAttributes> implements ReviewAttributes{
   public id!: number;
   public rating!: number;
-  public text_review!: string;
+  public review_text!: string;
   public game_id!: number;
   public game!: Game;
 }
@@ -29,7 +29,7 @@ Review.init(
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  text_review: {
+  review_text: {
     type: DataTypes.STRING,
     allowNull: false,
   },

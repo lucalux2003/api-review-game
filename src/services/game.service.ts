@@ -33,7 +33,7 @@ export class GameService {
     if(console){
       return Game.create({title: title, console_id: console_id });
     }
-    return notFound("Console id " + console_id);
+    return notFound("Console id " + console_id); // if the console doesn't exist
   }
 
   // Met à jour un jeu
