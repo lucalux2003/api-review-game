@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Patch, Route, Tags, Path } from "tsoa";
+import { Body, Controller, Get, Post, Patch, Route, Tags, Path, Delete } from "tsoa";
 import { Review } from "../models/review.model";
 import { ReviewDTO } from "../dto/review.dto";
 import { reviewService } from "../services/review.service";
@@ -16,7 +16,7 @@ export class ReviewController extends Controller {
     return reviewService.getReviewById(id);
   }
 
-  // Crée un nouveau jeu
+  // Crée une nouvelle review
   @Post("/")
   public async createReview(
     @Body() requestBody: ReviewDTO
@@ -25,7 +25,7 @@ export class ReviewController extends Controller {
     return reviewService.createReview(rating,review_text, game_id);
   }
 
-  // Met à jour une console par ID
+  // Met à jour une review par ID
   @Patch("{id}")
   public async updateReview(
     @Path() id: number,
@@ -33,5 +33,11 @@ export class ReviewController extends Controller {
   ): Promise<ReviewDTO | null> {
     const { rating,review_text, game_id } = requestBody;
     return reviewService.updateReview(id, rating,review_text, game_id);
+  }
+
+  // Supprime une review par ID
+  @Delete("{id}")
+  public async deleteConsole(@Path() id: number): Promise<void> {
+    await reviewService.deleteReview(id);
   }
 }

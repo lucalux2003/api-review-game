@@ -4,6 +4,7 @@ import { Game } from "../models/game.model";
 import { notFound } from "../error/NotFoundError";
 import { Review } from "../models/review.model";
 import { ReviewDTO } from "../dto/review.dto";
+import { preconditionFailed } from "../error/PreconditionFailed";
 
 
 export class ReviewService {
@@ -43,6 +44,16 @@ export class ReviewService {
       return Review.create({rating: rating, review_text: review_text, game_id: game_id }); //rating,review_text, game_id
     }
     return notFound("Game id " + game_id); // if the game doesn't exist
+  }
+
+  // Supprime une console par ID
+  public async deleteReview(id: number): Promise<void> {
+    const review = await Review.findByPk(id);
+    if (review) {
+      await review.destroy();
+    } else {
+      notFound(id.toString());
+    }
   }
 
   // Met à jour un jeu
